@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 
 import Firebase, { FirebaseContext } from './components/Firebase';
 
+console.log('create-react-app env:', process.env.NODE_ENV);
+console.log('firefly project:', process.env.REACT_APP_ENV);
+
 ReactDOM.render(
 	<FirebaseContext.Provider value={new Firebase()}>
 		<App />
