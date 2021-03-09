@@ -1,10 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-function HomePage(props) {
-	return <div>HomePage</div>;
-}
+import { withAuthorization } from '../Session';
 
-HomePage.propTypes = {};
+const HomePage = () => (
+	<div>
+		<h1>Home Page</h1>
+		<p>The Home Page is accessible by every signed in user.</p>
+	</div>
+);
 
-export default HomePage;
+const condition = (authUser) => !!authUser;
+
+export default withAuthorization(condition)(HomePage);
