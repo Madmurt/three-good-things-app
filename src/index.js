@@ -1,22 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './components/App';
-import reportWebVitals from './reportWebVitals';
-
-import Firebase, { FirebaseContext } from './components/Firebase';
-
-console.log('create-react-app env:', process.env.NODE_ENV);
-console.log('firefly project:', process.env.REACT_APP_ENV);
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
-	<FirebaseContext.Provider value={new Firebase()}>
+	<React.StrictMode>
 		<App />
-	</FirebaseContext.Provider>,
+	</React.StrictMode>,
 	document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
