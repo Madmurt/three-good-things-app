@@ -3,11 +3,11 @@ import React, { useRef, useState } from 'react';
 import { Alert, Form, Button, Card } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 
-export default function Signup() {
+export default function UpdateProfile() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfimRef = useRef();
-	const { signup } = useAuth();
+	const { currentUser, updateEmail, updatePassword } = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
@@ -22,23 +22,32 @@ export default function Signup() {
 			return setError("Password don't match!");
 		}
 
-		try {
-			setError('');
-			setLoading(true);
-			await signup(email, password);
-			history.push('/');
-		} catch {
-			setError('Failed to create an account');
+		const promises = [];
+		setLoading(true);
+		if (email !== currentUser.email) {
+			promises.push(updateEmail(email));
+		}
+		if (password) {
+			promises.push(updatePassword(password));
 		}
 
-		setLoading(false);
+		Promise.all(promises)
+			.then(() => {
+				history.push('/');
+			})
+			.catch(() => {
+				setError('Profile update failed');
+			})
+			.finally(() => {
+				setLoading(false);
+			});
 	}
 
 	return (
 		<>
 			<Card>
 				<Card.Body>
-					<h2 className='text-center mb-4'>Sign Up</h2>
+					<h2 className='text-center mb-4'>Update Profile</h2>
 					{error && <Alert variant='danger'>{error}</Alert>}
 					<Form onSubmit={handleSubmit}>
 						<Form.Group id='email'>
@@ -47,6 +56,7 @@ export default function Signup() {
 								type='email'
 								ref={emailRef}
 								required
+								defaultValue={currentUser.email}
 							/>
 						</Form.Group>
 						<Form.Group id='password'>
@@ -54,7 +64,7 @@ export default function Signup() {
 							<Form.Control
 								type='password'
 								ref={passwordRef}
-								required
+								placeholder='Leave blank to keep the same'
 							/>
 						</Form.Group>
 						<Form.Group id='passwordConfim'>
@@ -62,7 +72,7 @@ export default function Signup() {
 							<Form.Control
 								type='password'
 								ref={passwordConfimRef}
-								required
+								placeholder='Leave blank to keep the same'
 							/>
 						</Form.Group>
 						<Button
@@ -70,13 +80,13 @@ export default function Signup() {
 							className='w-100'
 							type='submit'
 						>
-							Sign Up
+							Update
 						</Button>
 					</Form>
 				</Card.Body>
 			</Card>
 			<div className='w-100 text-center mt-2'>
-				Already have an account? <Link to='/login'>Log In</Link>
+				<Link to='/'>Cancel</Link>
 			</div>
 		</>
 	);
