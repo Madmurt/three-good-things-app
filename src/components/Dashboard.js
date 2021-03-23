@@ -2,6 +2,7 @@ import { useAuth } from '../contexts/AuthContext';
 import React, { useState } from 'react';
 import { Alert, Button, Card } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
+import GratitudeForm from './GratitudeForm';
 
 export default function Dashboard() {
 	const { logout, currentUser } = useAuth();
@@ -20,7 +21,9 @@ export default function Dashboard() {
 
 	return (
 		<>
-			<Card>
+			<GratitudeForm />
+
+			<Card className='mt-5'>
 				<Card.Body>
 					<h2 className='text-center mb-4'>Profile</h2>
 					{error && <Alert variant='danger'>{error}</Alert>}

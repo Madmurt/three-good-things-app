@@ -8,6 +8,8 @@ import Login from './Login';
 import PrivateRoute from './PrivateRoute';
 import ForgotPassword from './ForgotPassword';
 import UpdateProfile from './UpdateProfile';
+import SharePreview from './SharePreview';
+import { GratitudeProvider } from '../contexts/GratitudeContext';
 
 const App = (props) => {
 	return (
@@ -18,23 +20,29 @@ const App = (props) => {
 			<div className='w-100' style={{ maxWidth: '400px' }}>
 				<Router>
 					<AuthProvider>
-						<Switch>
-							<PrivateRoute
-								exact
-								path='/'
-								component={Dashboard}
-							/>
-							<PrivateRoute
-								path='/update-profile'
-								component={UpdateProfile}
-							/>
-							<Route path='/signup' component={Signup} />
-							<Route path='/login' component={Login} />
-							<Route
-								path='/forgot-password'
-								component={ForgotPassword}
-							/>
-						</Switch>
+						<GratitudeProvider>
+							<Switch>
+								<PrivateRoute
+									exact
+									path='/'
+									component={Dashboard}
+								/>
+								<PrivateRoute
+									path='/update-profile'
+									component={UpdateProfile}
+								/>
+								<PrivateRoute
+									path='/share-preview'
+									component={SharePreview}
+								/>
+								<Route path='/signup' component={Signup} />
+								<Route path='/login' component={Login} />
+								<Route
+									path='/forgot-password'
+									component={ForgotPassword}
+								/>
+							</Switch>
+						</GratitudeProvider>
 					</AuthProvider>
 				</Router>
 			</div>
