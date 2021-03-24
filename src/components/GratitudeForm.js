@@ -13,27 +13,30 @@ export default function GratitudeForm() {
 	const history = useHistory();
 	const { saveGratitude } = useGratitude();
 
-	async function handleSubmit(e) {
-		e.preventDefault();
+	function setGratitudeArray() {
 		const gratitudeArray = [];
 		gratitudeArray.push(firstGratitudeRef.current.value);
 		secondGratitudeRef &&
 			gratitudeArray.push(secondGratitudeRef.current.value);
 		thirdGratitudeRef &&
 			gratitudeArray.push(thirdGratitudeRef.current.value);
-		setGratitude(gratitudeArray);
+		return setGratitude(gratitudeArray);
+	}
 
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setGratitudeArray();
 		try {
 			setError('');
 			setLoading(true);
-			await saveGratitude(gratitudeArray);
+			await saveGratitude(gratitude);
 			history.push('/share-preview');
 		} catch {
 			setError('Failed to save');
 		}
 
 		setLoading(false);
-	}
+	};
 
 	return (
 		<>
@@ -42,8 +45,6 @@ export default function GratitudeForm() {
 					<h2 className='text-center mb-4'>
 						What are you grateful for today?
 					</h2>
-					<pre>{gratitude}</pre>
-
 					{error && <Alert variant='danger'>{error}</Alert>}
 					<Form onSubmit={handleSubmit}>
 						<Form.Group id='email'>
