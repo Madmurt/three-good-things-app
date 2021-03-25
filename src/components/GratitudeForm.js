@@ -20,16 +20,15 @@ export default function GratitudeForm() {
 			gratitudeArray.push(secondGratitudeRef.current.value);
 		thirdGratitudeRef &&
 			gratitudeArray.push(thirdGratitudeRef.current.value);
-		return setGratitude(gratitudeArray);
+		return gratitudeArray;
 	}
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setGratitudeArray();
 		try {
 			setError('');
 			setLoading(true);
-			await saveGratitude(gratitude);
+			await saveGratitude(setGratitudeArray());
 			history.push('/share-preview');
 		} catch {
 			setError('Failed to save');
