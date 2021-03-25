@@ -1,0 +1,17 @@
+.imageBackground {
+	background: #3289a8 center/contain;
+	height: 540px;
+	z-index: -1;
+}
+
+.image-header {
+	color: #fff;
+	padding-top: 20px;
+	padding-left: 20px;
+}
+
+.image-text {
+	color: #fff;
+	padding-top: 20px;
+	padding-left: 20px;
+}
